@@ -27,6 +27,8 @@ editables desde un panel.
 
 ## Arquitectura
 
+![Arquitectura de SetterBot](docs/img/arquitectura.svg)
+
 ```
 DM en Instagram
       │   Meta Graph API — webhook POST

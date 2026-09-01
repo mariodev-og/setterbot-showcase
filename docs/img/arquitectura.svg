@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 668" font-family="Segoe UI,Helvetica,Arial,sans-serif">
+<rect width="860" height="668" fill="#ffffff"/>
+<text x="430.0" y="34" text-anchor="middle" font-size="20" font-weight="700" fill="#1a2233">SetterBot — flujo de calificación de leads</text>
+<defs><marker id="a" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#94a3b8"/></marker></defs>
+<rect x="30" y="70" width="800" height="52" rx="10" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.5"/>
+<text x="430.0" y="92.0" text-anchor="middle" font-size="14.5" font-weight="700" fill="#1a2233">DM en Instagram</text>
+<text x="430.0" y="111.0" text-anchor="middle" font-size="12.5" fill="#5b6472">webhook de Meta Graph API</text>
+<line x1="430.0" y1="122" x2="430.0" y2="156" stroke="#94a3b8" stroke-width="2" marker-end="url(#a)"/>
+<rect x="30" y="156" width="800" height="52" rx="10" fill="#f1f5f9" stroke="#2f5496" stroke-width="1.5"/>
+<text x="430.0" y="178.0" text-anchor="middle" font-size="14.5" font-weight="700" fill="#1a2233">FastAPI</text>
+<text x="430.0" y="197.0" text-anchor="middle" font-size="12.5" fill="#5b6472">routing por page_id → account_id (multi-tenant)</text>
+<line x1="430.0" y1="208" x2="430.0" y2="242" stroke="#94a3b8" stroke-width="2" marker-end="url(#a)"/>
+<rect x="30" y="242" width="800" height="52" rx="10" fill="#f1f5f9" stroke="#2f5496" stroke-width="1.5"/>
+<text x="430.0" y="264.0" text-anchor="middle" font-size="14.5" font-weight="700" fill="#1a2233">Filtros de gatillos</text>
+<text x="430.0" y="283.0" text-anchor="middle" font-size="12.5" fill="#5b6472">si detectan, el bot se calla y avisa al humano</text>
+<line x1="430.0" y1="294" x2="430.0" y2="328" stroke="#94a3b8" stroke-width="2" marker-end="url(#a)"/>
+<rect x="30" y="328" width="800" height="52" rx="10" fill="#f5f3ff" stroke="#7c3aed" stroke-width="1.5"/>
+<text x="430.0" y="359.0" text-anchor="middle" font-size="14.5" font-weight="600" fill="#1a2233">Motor de reglas + Claude (personalidad por cuenta)</text>
+<line x1="430.0" y1="380" x2="430.0" y2="414" stroke="#94a3b8" stroke-width="2" marker-end="url(#a)"/>
+<rect x="30" y="414" width="800" height="52" rx="10" fill="#f5f3ff" stroke="#7c3aed" stroke-width="1.5"/>
+<text x="430.0" y="436.0" text-anchor="middle" font-size="14.5" font-weight="700" fill="#1a2233">Voz→texto (Whisper) · Temperatura · Scoring</text>
+<text x="430.0" y="455.0" text-anchor="middle" font-size="12.5" fill="#5b6472">reglas fijas, sin IA</text>
+<line x1="430.0" y1="466" x2="430.0" y2="500" stroke="#94a3b8" stroke-width="2" marker-end="url(#a)"/>
+<rect x="30" y="500" width="800" height="52" rx="10" fill="#f1f5f9" stroke="#2f5496" stroke-width="1.5"/>
+<text x="430.0" y="531.0" text-anchor="middle" font-size="14.5" font-weight="600" fill="#1a2233">Google Sheets (vista del cliente) + Cal.com (agenda)</text>
+<line x1="430.0" y1="552" x2="430.0" y2="586" stroke="#94a3b8" stroke-width="2" marker-end="url(#a)"/>
+<rect x="30" y="586" width="800" height="52" rx="10" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.5"/>
+<text x="430.0" y="608.0" text-anchor="middle" font-size="14.5" font-weight="700" fill="#1a2233">Verificación de la reserva</text>
+<text x="430.0" y="627.0" text-anchor="middle" font-size="12.5" fill="#5b6472">chequeo aparte, no se confía en el webhook</text>
+</svg>
