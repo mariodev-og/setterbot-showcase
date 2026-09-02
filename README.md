@@ -31,6 +31,10 @@ editables desde un panel.
 
 ![Arquitectura de SetterBot](docs/img/arquitectura.svg)
 
+**Panel — recreación con datos de ejemplo / panel recreation with example data:**
+
+![Panel](docs/img/panel.png)
+
 ```
 DM en Instagram
       │   Meta Graph API — webhook POST
