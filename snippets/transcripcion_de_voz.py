@@ -1,6 +1,12 @@
+# Español primero · English below
 # Origen: app/transcriber.py del sistema en producción (archivo completo).
 # Ilustra: la transcripción de notas de voz ocurre ANTES del motor de reglas,
 # así el resto del sistema nunca sabe que el mensaje entró como audio.
+#
+# --- English ---
+# Source: app/transcriber.py from the production system (full file).
+# Shows: voice-note transcription happens BEFORE the rule engine, so the rest of
+# the system never knows the message came in as audio.
 """
 Transcripción de audio vía Groq Whisper.
 

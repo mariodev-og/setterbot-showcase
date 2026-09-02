@@ -1,8 +1,16 @@
+# Español primero · English below
 # Origen: app/change_detector.py del sistema en producción (archivo completo).
 # Ilustra: el cliente edita su Google Sheet a mano y el sistema tiene que
 # enterarse. En vez de confiar en un webhook, se detecta el cambio contra el
 # último estado conocido — la misma desconfianza que en la verificación de
 # agenda, aplicada a otra integración.
+#
+# --- English ---
+# Source: app/change_detector.py from the production system (full file).
+# Shows: the client edits their Google Sheet by hand and the system has to notice.
+# Instead of trusting a webhook, the change is detected against the last known
+# state — the same distrust as in the booking verification, applied to another
+# integration.
 
 """
 Detector de cambios en el sheet del cliente.

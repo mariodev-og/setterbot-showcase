@@ -1,7 +1,14 @@
+# Español primero · English below
 # Origen: app/onboarding.py del sistema en producción (archivo completo).
 # Ilustra: el alta de una cuenta nueva genera su system_prompt y lo persiste,
 # sin tocar código ni desplegar. Es lo que hace que multi-tenant signifique
 # algo: la cuenta tres se dio de alta igual que la uno.
+#
+# --- English ---
+# Source: app/onboarding.py from the production system (full file).
+# Shows: onboarding a new account generates its system_prompt and persists it,
+# without touching code or deploying. That's what makes multi-tenant mean
+# something: account three was onboarded the same way as account one.
 
 """
 onboarding.py — Alta de clientes: generador de system_prompt + persistencia en DB.

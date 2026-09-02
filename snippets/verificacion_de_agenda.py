@@ -1,3 +1,4 @@
+# Español primero · English below
 # Origen: app/agenda_verificacion.py del sistema en producción (fragmento).
 # Ilustra: no se confía en el webhook de Cal.com — hay una verificación posterior
 # de que la reserva realmente ocurrió, hecha por un humano, antes de cerrar el
@@ -6,6 +7,15 @@
 # (listar_comprobantes_pendientes, confirmar_comprobante). Los módulos .state,
 # .sender, .sheets, .database y .agent se referencian por lazy import y no se
 # incluyen: quedan como estaban, el snippet es para leer, no para correr.
+#
+# --- English ---
+# Source: app/agenda_verificacion.py from the production system (fragment).
+# Shows: the Cal.com webhook is not trusted — there is a later human verification
+# that the booking actually happened, before closing the flow. The lead stays
+# 'booked_unverified' until someone confirms it.
+# Trimmed: marcar_falso_positivo() and the deposit-receipt section. The .state,
+# .sender, .sheets, .database and .agent modules are referenced by lazy import and
+# not included: the snippet is to read, not to run.
 """
 Lógica de verificación manual de agendas.
 

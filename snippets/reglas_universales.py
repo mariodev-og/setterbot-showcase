@@ -1,8 +1,15 @@
+# Español primero · English below
 # Origen: app/core_rules.py del sistema en producción (archivo completo).
 # Ilustra: el bloque de reglas que TODA cuenta del SaaS cumple, separado de
 # lo que cada cliente configura por su cuenta. Es la línea que divide el
 # producto de la personalización: si una regla vive acá, ningún cliente la
 # puede romper desde el panel.
+#
+# --- English ---
+# Source: app/core_rules.py from the production system (full file).
+# Shows: the block of rules that EVERY account in the SaaS obeys, separated from
+# what each client configures on their own. It's the line between product and
+# customization: if a rule lives here, no client can break it from the panel.
 
 """
 CORE_RULES — bloque de reglas universales que TODO setter bot del SaaS cumple

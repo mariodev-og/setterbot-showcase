@@ -1,7 +1,14 @@
+# Español primero · English below
 # Origen: app/scoring.py del sistema en producción (archivo completo).
 # Ilustra: el score de calificación usa reglas fijas, sin IA ni tokens extra:
 # se recalcula tras cada mensaje y el esquema de puntos cambia según el nicho
 # del lead (deportivo vs. no deportivo) de forma determinística.
+#
+# --- English ---
+# Source: app/scoring.py from the production system (full file).
+# Shows: the qualification score uses fixed rules, no AI and no extra tokens: it's
+# recomputed after each message and the point scheme changes with the lead's niche
+# (sports vs. non-sports) deterministically.
 """
 Cálculo del score de calificación del lead (1-10).
 

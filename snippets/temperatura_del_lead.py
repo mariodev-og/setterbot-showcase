@@ -1,7 +1,14 @@
+# Español primero · English below
 # Origen: app/temperature.py del sistema en producción (archivo completo).
 # Ilustra: la temperatura del lead la evalúa el LLM sobre el historial de la
 # conversación, pero con un vocabulario cerrado (4 palabras) y validación del
 # output: el resultado inválido cae a un fallback en vez de romper el flujo.
+#
+# --- English ---
+# Source: app/temperature.py from the production system (full file).
+# Shows: the lead's temperature is judged by the LLM over the conversation history,
+# but with a closed vocabulary (4 words) and output validation: an invalid result
+# falls back instead of breaking the flow.
 """
 Evaluación de temperatura del lead.
 Claude analiza el historial y decide si el lead es frío, tibio o caliente.

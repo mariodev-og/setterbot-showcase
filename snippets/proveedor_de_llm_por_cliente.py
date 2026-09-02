@@ -1,3 +1,4 @@
+# Español primero · English below
 # Origen: app/llm.py del sistema en producción (fragmento: docstring del
 # módulo y resolver_llm_config; se recortaron call_llm, call_llm_tool y los
 # constructores de cliente HTTP).
@@ -5,6 +6,14 @@
 # se deduce del prefijo de la API key del cliente (sk-ant- → Anthropic, el
 # resto → OpenAI). Permitió mover una cuenta a un modelo más barato sin
 # tocar el código ni afectar a las demás.
+#
+# --- English ---
+# Source: app/llm.py from the production system (fragment: module docstring and
+# resolver_llm_config; call_llm, call_llm_tool and the HTTP client builders were
+# trimmed).
+# Shows: each account can run on a different provider — it's inferred from the
+# prefix of the client's API key (sk-ant- -> Anthropic, otherwise -> OpenAI). It
+# let one account move to a cheaper model without touching code or affecting the rest.
 
 """
 Abstracción de proveedor LLM.
