@@ -1,3 +1,5 @@
+**🇦🇷 Español · 🇬🇧 [English](#-english)**
+
 # Mapa de módulos
 
 El sistema en producción tiene **35 módulos** en `app/`. Esta tabla los lista
@@ -69,3 +71,36 @@ número no es la cantidad total, sino cuántos **leen `client_id` o `account_id`
 como parámetro o como filtro: resuelven configuración por cliente, aíslan datos
 por cuenta o enrutan según la cuenta. Los 9 restantes son utilidades que no
 saben de qué cuenta viene lo que procesan.
+
+---
+
+<a name="english"></a>
+# 🇬🇧 English — Module map
+
+The production system has **35 modules** in `app/`. The Spanish table above lists
+all of them with real line counts and marks which are published here.
+
+**Published:** 8 of 35 modules — 6 in full, 2 as fragments.
+
+## Why this selection
+
+Published modules are the ones that **read at a glance and show a decision**. The
+rest are out for two distinct reasons:
+
+- **By size.** `agent.py` (5814 lines) and `admin.py` (8367) are the two largest
+  files. Neither helps a five-minute evaluation, and both show technical debt
+  without the context of how it got there. That context is in the README
+  decisions.
+- **By client content.** `personalities.py` is built from transcripts of the
+  client's real conversations. Not publishable even renamed: the material is
+  theirs, not mine.
+
+The rest are private simply because the full system isn't published.
+
+## Note on the multi-tenancy count
+
+The CV mentions multi-tenancy spread across 26 of the 35 modules. That number
+isn't the total, but how many **read `client_id` or `account_id`** as a parameter
+or filter: resolve per-client config, isolate data per account, or route by
+account. The remaining 9 are utilities that don't know which account they're
+processing.

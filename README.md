@@ -1,3 +1,5 @@
+**🇦🇷 Español · 🇬🇧 [English](#-english)**
+
 # SetterBot
 
 > Agente de ventas automatizado que califica leads en Instagram y agenda llamadas para un closer humano.
@@ -201,3 +203,173 @@ Puedo dar acceso de lectura durante un proceso de selección: escribime a
 ## Licencia
 
 Todos los derechos reservados. Ver [`LICENSE`](LICENSE).
+
+---
+
+<a name="english"></a>
+# 🇬🇧 English
+
+# SetterBot
+
+> Automated sales agent that qualifies Instagram leads and books calls for a human closer.
+
+**This repository is a technical showcase, not the system.** The production
+system is private. Here you'll find the architecture, the design decisions, the
+tests, and a few code snippets chosen to show how it's built.
+
+## The problem
+
+A coach with a personal brand received dozens of Instagram DMs a day and
+couldn't answer them all, filter who had real buying intent, and book the sales
+call with their closer. Existing automation tools (ManyChat, n8n) charge per
+message or solve with visual flows that don't give the fine-grained control lead
+qualification needs.
+
+The bot had to do a human setter's job: greet, qualify with questions, detect
+whether the prospect was the right profile, gauge temperature, and only move the
+hot ones to booking. And it had to run on the client's real accounts, in
+production, without breaking a conversation.
+
+Along the way the multi-tenant model was proven: three client accounts running
+on a single server, each with its own persona, questions and rules, editable
+from a panel.
+
+## Architecture
+
+![SetterBot architecture](docs/img/arquitectura.svg)
+
+**Data flow:** the lead sends a DM and Meta's webhook delivers it to FastAPI,
+which resolves the account by `page_id` and assigns `account_id`. Before calling
+the LLM, trigger filters run: if they detect a pause (third-party query, no
+intent, competitor) the bot goes silent and raises an alert for the human. If
+there's no trigger, Claude replies with that account's persona. Every four-plus
+messages temperature is evaluated and the score recomputed. Everything is
+persisted to Google Sheets, the view the client sees and edits. When the lead
+wants to book, the bot sends the Cal.com link and the booking is confirmed by a
+later check — never taken as booked just because the webhook arrived.
+
+Full detail in [`docs/arquitectura.md`](docs/arquitectura.md).
+
+## Stack
+
+| Layer | Technology | Why this and not another |
+|---|---|---|
+| Backend | Python 3.10+ / FastAPI | Full control of the flow, no per-message subscriptions |
+| Visible database | Google Sheets | The client sees and edits their leads in real time, no technical tools |
+| Interface | `/admin` panel served from Python | One language, one process (see decision 4) |
+| AI | OpenAI or Anthropic per account · Groq Whisper (voice) | Provider is resolved per client from the API-key prefix, so one account can run a cheaper model without affecting the rest |
+| Integrations | Meta Graph API · Cal.com | Instagram direct and link booking |
+| Deployment | Railway | Fixed URL without ngrok, low fixed cost |
+
+## Design decisions
+
+The decisions that defined the project. **Each has four parts**: what was chosen,
+against what, why, and what it cost. The fourth is the one that matters — a
+decision with no stated cost isn't a decision, it's a preference.
+
+### Booking verification as a separate step
+
+- **What:** the Cal.com webhook is not trusted. There's a later check that the
+  booking exists: the lead stays `booked_unverified` until a human confirms it,
+  and only then does the bot continue the flow.
+- **Rejected alternative:** mark the lead as booked as soon as the webhook arrives.
+- **Why:** the webhook may not arrive or arrive late, and a false "booked"
+  polluted the closer's queue.
+- **Cost:** one more API call and latency at flow close.
+
+### The persona is built from the client's real conversations
+
+- **What:** each account's prompt is assembled from the client's real
+  conversations, so the bot mirrors their closing style. That's why the prompt
+  is the client's property and is not published.
+- **Rejected alternative:** a generic "sales assistant" prompt.
+- **Why:** the prospect has to feel they're talking to the owner, not a generic AI.
+- **Cost:** not portable between clients — it has to be rebuilt at each onboarding.
+
+### Multi-tenancy by configuration, not a fork per client
+
+- **What:** rules, questions and persona are edited from the panel; the three
+  clients run on a single server.
+- **Rejected alternative:** a fork and a deploy per client.
+- **Why:** the three clients are independent and share nothing, yet a deploy per
+  client tripled servers, cost and update effort for a single person. With
+  configuration, onboarding a new account is loading data, not touching code.
+- **Cost:** the panel grew a lot and configuration ended up spread across modules.
+
+### Interface served from Python, no template engine
+
+- **What:** the `/admin` panel is served directly from Python.
+- **Rejected alternative:** a separate template engine or a standalone frontend.
+- **Why:** it sped up the start: one language, one process, zero build.
+- **Cost:** and it's a real cost — `admin.py` reached 8367 lines. It's the
+  textbook case of a decision that accelerates early and charges you later.
+
+### Voice transcription inside the same text flow
+
+- **What:** audio is turned into text before entering the rule engine, so the
+  rest of the system never knows the message came in as audio.
+- **Rejected alternative:** a separate audio flow with its own pipeline.
+- **Why:** filters, temperature and scoring process one thing: text. Voice is
+  resolved at the edge, in `transcriber.py`.
+- **Cost:** depends on an external provider (Groq Whisper) and adds latency to
+  the first message.
+
+Full detail in [`docs/decisiones.md`](docs/decisiones.md).
+
+## Decisions about this repository
+
+- **It's a showcase, not a mirror.** The production system holds client
+  material: real names, real conversations, audio and business data. Publishing
+  it whole wasn't an option, not even renamed: the bot's persona is built from
+  transcripts of the client's real conversations, which belong to them.
+- **What's published is what reads, not what weighs.** The largest files —
+  `admin.py` (8367 lines) and `agent.py` (5814) — add nothing for an evaluator
+  and show technical debt without context. In their place go chosen snippets:
+  each illustrates a decision and reads at a glance.
+- **The only test ships in full, honestly.** `tests/test_no_fuga_cross_tenant.py`
+  is 22 lines with `print`s: a manual verification that there's no cross-account
+  data leak, not a pytest suite. It's presented as what it is. There's no other
+  suite in the project.
+- **Client names are replaced** with consistent fictional ones. No `[REDACTED]`
+  or `XXXX`: an invented name reads as an example, a blackout reads as a problem.
+
+## What's in this repository
+
+| Folder | Contents |
+|---|---|
+| [`docs/arquitectura.md`](docs/arquitectura.md) | Diagram and data flow |
+| [`docs/decisiones.md`](docs/decisiones.md) | Each decision with its why and its cost |
+| [`docs/mapa_modulos.md`](docs/mapa_modulos.md) | The 35 modules of the real system, which are published and which aren't |
+| [`docs/metricas.md`](docs/metricas.md) | Operation numbers measured on the production database |
+| `docs/img/` | Panel screenshots |
+| `snippets/` | 8 commented snippets, one per decision |
+| `tests/` | The cross-tenant leak verification script |
+
+The `snippets/` fragments don't form a runnable program: they're chosen to be
+read, not run.
+
+## Project scale
+
+**2,449 conversations and 32,021 messages processed** over 94 straight days of
+operation (2026-05-22 – 2026-08-24). **3 accounts** onboarded with their own
+configuration, **2** with real traffic. **292 conversations (11.9%)** arrived
+with voice notes the system transcribed.
+
+On the code side: 481 commits, 198 files, 35 modules, a purpose-built 76-endpoint
+panel, and multi-tenancy spread across 26 of those modules.
+
+Detail and measurement method in [`docs/metricas.md`](docs/metricas.md); the
+published/private split in [`docs/mapa_modulos.md`](docs/mapa_modulos.md).
+
+## Status
+
+Delivered. In production during that period; no active clients today.
+
+## Full code
+
+The production repository is private because it contains client material. I can
+grant read access during a hiring process: write me at **mario1804.dev@gmail.com**.
+
+## License
+
+All rights reserved. See [`LICENSE`](LICENSE).

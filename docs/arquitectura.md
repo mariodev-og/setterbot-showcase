@@ -1,3 +1,5 @@
+**🇦🇷 Español · 🇬🇧 [English](#-english)**
+
 # Arquitectura — SetterBot
 
 ## Vista general
@@ -73,3 +75,46 @@
 La configuración vive dispersa: personalidad, preguntas y reglas se editan
 desde el panel pero se aplican en módulos distintos. Es el costo directo de la
 decisión de multi-tenancy por configuración (ver `decisiones.md`).
+
+---
+
+<a name="english"></a>
+# 🇬🇧 English — Architecture
+
+## Data flow
+
+1. **Input.** A lead DMs the client's Instagram account. Meta Graph API delivers
+   the message as a `POST` webhook to the server.
+2. **Multi-account routing.** The webhook carries a `page_id`; a map in `main.py`
+   turns it into `account_id`. A single server serves three client accounts and
+   each knows which persona, rules and Google Sheets tab are its own.
+3. **Trigger filters.** They run before the LLM. If the message trips a pause
+   (third-party query, no intent, competitor), the bot doesn't reply and an
+   alert is raised for the human setter. The lead stays `paused`.
+4. **Rule engine + LLM.** With no trigger, Claude replies following that
+   account's persona, built from the client's real conversations. The system
+   extracts data from the message (budget, pain point, etc.).
+5. **Audio.** If the message came in as a voice note, it's transcribed with Groq
+   Whisper *before* the rule engine. The rest of the system only sees text.
+6. **Temperature and scoring.** Every four-plus messages, Claude classifies the
+   lead as hot/warm/cold/uninterested with a closed vocabulary. The score (1-10)
+   is recomputed with fixed rules after each message.
+7. **Persistence.** Each step is saved to Google Sheets, the view the client
+   sees and edits in real time. It's the visible database, not a cosmetic detail.
+8. **Booking.** When the lead wants to book, the Cal.com link is sent. The
+   booking is **not** taken as confirmed by the webhook: it stays
+   `booked_unverified` and a human confirms it. Only then does the bot continue
+   the post-booking flow.
+
+## What comes out of the system
+
+- Replies to the lead on Instagram.
+- An updated row per lead in Google Sheets, colored by temperature.
+- A notice to the closer when the bot books.
+- A booked-leads table in the `/admin` panel for call follow-up.
+
+## Main tension point
+
+Configuration lives spread out: persona, questions and rules are edited from the
+panel but applied in different modules. It's the direct cost of the
+multi-tenancy-by-configuration decision (see `decisiones.md`).
